@@ -7,8 +7,9 @@
 //
 
 import UIKit
+ 
 
-class FollowerTableViewController: UITableViewController {
+class FollowerTableViewController: UITableViewController, FollowerCellDelegate {
   
   var users: [User] =  [
     User(name: "John", isFollowing: false),
@@ -25,6 +26,26 @@ class FollowerTableViewController: UITableViewController {
     super.viewDidLoad()
     title = "Following"
   }
+    
+    func followButtonTapped(forUser: String) {
+        
+        
+        for var i in 0..<users.count{
+            if users[i].name == forUser{
+                if users[i].isFollowing{
+                    users[i].isFollowing = false
+                    tableView.reloadData()
+                    break
+                } else {
+                    users[i].isFollowing = true
+                    tableView.reloadData()
+                    break
+                }
+                
+            }
+            
+        }
+    }
   
   
   // MARK: - Table view data source
@@ -36,6 +57,7 @@ class FollowerTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "FollowerCell") as! FollowerCell
     cell.user = users[indexPath.row]
+    cell.delegate = self
     return cell
   }
 

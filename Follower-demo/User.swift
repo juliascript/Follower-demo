@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct User {
+struct User{
   let name: String
   var isFollowing: Bool
 }

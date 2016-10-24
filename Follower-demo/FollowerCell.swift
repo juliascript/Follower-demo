@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol FollowerCellDelegate: class {
+    func followButtonTapped(forUser: String)
+}
+
 class FollowerCell: UITableViewCell {
+
+  weak var delegate: FollowerCellDelegate?
   
   let isFollowingString = "You are following this user"
   let isNotFollowingString = "You are not following this user"
@@ -25,6 +31,18 @@ class FollowerCell: UITableViewCell {
 
   @IBAction func followButtonPressed(_ sender: AnyObject) {
     print(#function)
+    
+    if let followButton = sender as? FollowButton {
+
+        if followButton.followState == .isFollowing{
+            delegate?.followButtonTapped(forUser: nameLabel.text!)
+//            followButton.followState = .isNotFollowing
+        } else {
+            delegate?.followButtonTapped(forUser: nameLabel.text!)
+//            followButton.followState = .isFollowing
+        }
+        
+    }
   }
   
   func setUIForCurrentFollowingState() {
